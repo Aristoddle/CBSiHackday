@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link href="../build/nv.d3.css" rel="stylesheet" type="text/css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.2/d3.min.js" charset="utf-8"></script>
+  <script src="../build/nv.d3.js"></script>
+
+  <style>
+  text {
+    font: 12px sans-serif;
+  }
+  svg {
+    display: block;
+  }
+  html, body, #test1, svg {
+    margin: 0px;
+    padding: 0px;
+    height: 100%;
+    width: 100%;
+  }
+  </style>
+</head>
+<body>
+
+  <div id="test1" class='with-3d-shadow with-transitions'>
+    <svg></svg>
+  </div>
+
+  <script>
+
+  var test = {'data':[{"created_time":"2015-09-10","story":"Lama","message":"Dextroamphetamine saccharate, Amphetamine aspartate, Dextroamphetamine sulfate, and Amphetamine sulfate"},
+  {"created_time":"2016-03-25","story":"Albi","message":"Gentamicin Sulfate"},
+  {"created_time":"2016-05-24","story":"Želiv","message":"Beta carotene, cholecalciferol, dl-alpha tocopheryl acetate, ascorbic acid, folic acid, thiamin mononitrate, riboflavin, niacinamide, pyridoxine hydrochloride, cyanocobalamin, calcium carbonate, potas"},
+  {"created_time":"2016-06-20","story":"Dzhalka","message":"Ibuprofen"},
+  {"created_time":"2016-02-06","story":"Niños Heroes","message":"Lisinopril"},
+  {"created_time":"2016-02-11","story":"Pakembangan","message":"PROPRANOLOL HYDROCHLORIDE"},
+  {"created_time":"2016-01-28","story":"Cikuya","message":"mineral oil, petrolatum, phenylephrine HCl"},
+  {"created_time":"2015-09-30","story":"Maslog","message":"ELVITEGRAVIR"},
+  {"created_time":"2016-05-31","story":"Le Mans","message":"Trandolapril"},
+  {"created_time":"2016-05-03","story":"Baishi","message":"SELENIUM SULFIDE"}]};
+  var timeState = 'month';
+  var contentState = 'story';
+  // register our custom symbols to nvd3
+  // make sure your path is valid given any size because size scales if the chart scales.
+
+  // create the chart
+  var chart;
+  nv.addGraph(function() {
+    chart = nv.models.scatterChart()
+    .showDistX(false)
+    .showDistY(false)
+    .useVoronoi(true)
+    .color(d3.scale.category10().range())
+    .duration(300)
+    ;
+    chart.dispatch.on('renderEnd', function(){
+      console.log('render complete');
+    });
+
+    chart.xAxis.tickFormat(d3.format('.02f'));
+    chart.xAxis.axisLabel('Time of Day');
+    chart.yAxis.tickFormat(d3.format('.02f'));
+    chart.yAxis.axisLabel('Metric');
+
+
+    d3.select('#test1 svg')
+    .datum(setToGraph(testList))
+    .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    chart.dispatch.on('stateChange', function(e) { ('New State:', JSON.stringify(e)); });
+    return chart;
+  });
+
+  function setToGraph(testList) {
+    for (var i = 0; i < testList.length; i++){
+      //# groups,# points per group
+      // smiley and thin-x are our custom symbols!
+      var data = [],
+      shapes = ['circle', 'cross'],
+      monthName = ['Jan', 'Feb', 'Mar'];
+      for (i = 0; i < 4; i++) {
+        data.push({
+          key: 'Group ' + i,
+          values: []
+        });
+
+        data[i].values.push({
+          x: parseDate(test),
+          y: parseParam(testList[i], contentState),
+          //we can use this to change the size of a block
+          size: Math.round(Math.random() * 100) / 100,
+          shape: shapes[1]
+        });
+      }
+      return data;
+    }
+
+    function parseDate(obj){
+      if (timeState == 'month') {
+        return parseMonth(obj);
+      } else return parseYear(obj)
+    }
+    //pulls month published
+    function parseMonth(obj) {
+      var formated = obj.data[0].created_time;
+      return parseInt((formated.substring(5,7)));
+    }
+
+    //pulls year published
+    function parseYear(obj) {
+      var formated = obj.data[0].created_time;
+      console.log(parseInt((formated.substring(0,4))));
+      return parseInt((formated.substring(0,4)));
+    }
+
+    function parseParam(obj, param) {
+      return Math.random()*100;
+      /*switch(param){
+      case 'story':
+      return (obj.data[0].story)
+      break;
+      case 'created_time':
+      return (obj.data[0].message)
+      break;
+    }
+    */
+  }
+  var holder = {
+    year:'2016',
+    monthList:
+      {'01':{
+        'total':0,
+        dayVals: Array.apply(null, Array(31)).map(Number.prototype.valueOf,0)
+      },
+      '02':{
+        'total':0,
+        dayVals: Array.apply(null, Array(28)).map(Number.prototype.valueOf,0)
+      },
+      '03':{
+        'total':0,
+        dayVals: Array.apply(null, Array(31)).map(Number.prototype.valueOf,0)
+      },
+      '04':{
+        'total':0,
+        dayVals: Array.apply(null, Array(30)).map(Number.prototype.valueOf,0)
+      },
+      '05':{
+        'total':0,
+        dayVals: Array.apply(null, Array(31)).map(Number.prototype.valueOf,0)
+      },
+      '06':{
+        'total':0,
+        dayVals: Array.apply(null, Array(30)).map(Number.prototype.valueOf,0)
+      },
+      '07':{
+        'total':0,
+        dayVals: Array.apply(null, Array(31)).map(Number.prototype.valueOf,0)
+      },
+      '08':{
+        'total':0,
+        dayVals: Array.apply(null, Array(31)).map(Number.prototype.valueOf,0)
+      },
+      '09':{
+        'total':0,
+        dayVals: Array.apply(null, Array(30)).map(Number.prototype.valueOf,0)
+      },
+      '10':{
+        'total':0,
+        dayVals: Array.apply(null, Array(31)).map(Number.prototype.valueOf,0)
+      },
+      '11':{
+        'total':0,
+        dayVals: Array.apply(null, Array(30)).map(Number.prototype.valueOf,0)
+
+      },
+      '12':{
+        'total':0,
+        dayVals: Array.apply(null, Array(31)).map(Number.prototype.valueOf,0)
+      }
+    }
+  }
+  function filter(obj){
+    var i = 0;
+    while(i < obj.data.length){
+      var month = parseMonth(obj, i);
+      var date = parseDay(obj, i);
+      holder.monthList[month].total++;
+      holder.monthList[month].dayVals[date]++;
+      i++;
+    }
+  }
+
+}
+  </script>
+</body>
+</html>
