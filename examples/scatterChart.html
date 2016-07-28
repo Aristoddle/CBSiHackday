@@ -78,10 +78,10 @@
           key: 'Group ' + i,
           values: []
         });
-
+        console.log(testList[0]);
 
         data[i].values.push({
-          x: parseDate(testList[i]),
+          x: parseDate(test),
           y: parseParam(testList[i], contentState),
           //we can use this to change the size of a block
           size: Math.round(Math.random() * 100) / 100,
@@ -89,14 +89,12 @@
         });
       }
       return data;
-
     }
-
 
     function parseDate(obj){
       if (timeState == 'month') {
-        return parseMonth(test);
-      } else return parseYear(test)
+        return parseMonth(obj);
+      } else return parseYear(obj)
     }
     //pulls month published
     function parseMonth(obj) {
@@ -110,7 +108,6 @@
       console.log(parseInt((formated.substring(0,4))));
       return parseInt((formated.substring(0,4)));
     }
-
 
     function parseParam(obj, param) {
       return Math.random()*100;
