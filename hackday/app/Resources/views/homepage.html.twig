@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    {% image 'OomphLogo.jpg' %}
+    <img src="{{ asset_url }}" alt="Example" />
+    {% endimage %}
+    <div class="ui three column grid">
+        <div class="column">
+
+        </div>
+        <div class="three column centered row" style="z-index: 200;">
+            <div class="ui column">
+                <button id="dash" data-route="{{ path('postIndex') }}" class="ui green button">
+                    Dashboard
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            var button = $('#dash');
+            button.click();
+
+            function moveToDash(e){
+                var button = $(e.currentTarget);
+                var route = button.attr('data-route');
+                window.location.href = route;
+            }
+        });
+    </script>
+
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<div>
+    <table>
+        <thead>
+        <tr>
+            <td>Title</td>
+            <td>Likes</td>
+            <td>Views</td>
+        </tr>
+        </thead>
+        <tbody>
+        {% for post in posts %}
+            <tr>
+                <td>
+                    <a href="{{ path('postPage', {postId: post.id}) }}">{{ post.title }}</a>
+                </td>
+                <td>{{ post.likes }}</td>
+                <td>{{ post.views }}</td>
+            </tr>
+        {% else %}
+            <h3>YOU AIN'T GOT NO POSTS</h3>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}
