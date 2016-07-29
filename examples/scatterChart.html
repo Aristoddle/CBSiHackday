@@ -31,6 +31,30 @@
 
   var test = {'data':[{"created_time":"2015-09-10","story":"Lama","like_metric":15},
   {"created_time":"2016-03-25","story":"Albi","like_metric":100},
+  {"created_time":"2016-10-27","story":"Fivebridge","like_metric":3988},
+  {"created_time":"2016-02-03","story":"Eire","like_metric":3170},
+  {"created_time":"2016-10-27","story":"Twitterlist","like_metric":4911},
+  {"created_time":"2016-05-01","story":"Aimbo","like_metric":2530},
+  {"created_time":"2016-10-24","story":"Jaxnation","like_metric":3276},
+  {"created_time":"2016-08-07","story":"Photobug","like_metric":1838},
+  {"created_time":"2016-06-07","story":"Mynte","like_metric":1864},
+  {"created_time":"2016-01-17","story":"Plambee","like_metric":838},
+  {"created_time":"2016-06-13","story":"Thoughtbridge","like_metric":3078},
+  {"created_time":"2016-09-18","story":"Digitube","like_metric":3798},
+  {"created_time":"2016-09-09","story":"Thoughtsphere","like_metric":1642},
+  {"created_time":"2016-04-19","story":"Feedspan","like_metric":4177},
+  {"created_time":"2016-12-24","story":"Meevee","like_metric":1829},
+  {"created_time":"2016-03-18","story":"Yombu","like_metric":1335},
+  {"created_time":"2016-07-04","story":"Zoomlounge","like_metric":4386},
+  {"created_time":"2016-03-25","story":"Jaxbean","like_metric":1962},
+  {"created_time":"2016-10-19","story":"Dazzlesphere","like_metric":3483},
+  {"created_time":"2016-11-17","story":"Wikibox","like_metric":548},
+  {"created_time":"2016-08-27","story":"Zooxo","like_metric":3917},
+  {"created_time":"2016-01-05","story":"Skiba","like_metric":2724},
+  {"created_time":"2016-07-23","story":"Jaloo","like_metric":2922},
+  {"created_time":"2016-03-01","story":"Eidel","like_metric":2538},
+  {"created_time":"2016-06-28","story":"Yodoo","like_metric":3783},
+  {"created_time":"2016-02-13","story":"Topdrive","like_metric":2834},
   {"created_time":"2016-05-24","story":"Želiv","like_metric":250},
   {"created_time":"2016-06-20","story":"Dzhalka","like_metric":15},
   {"created_time":"2016-02-06","story":"Niños Heroes","like_metric":220},
@@ -160,6 +184,7 @@ nv.addGraph(function() {
   chart.xAxis.axisLabel('Month');
   chart.yAxis.tickFormat(d3.format('.02f'));
   chart.yAxis.axisLabel('Likes per Post');
+  chart.showLegend(false);
 
 
   d3.select('#test1 svg')
@@ -179,7 +204,7 @@ function setToGraph(testList) {
     var data = [],
     shapes = ['circle', 'cross'],
     monthName = ['Jan', 'Feb', 'Mar'];
-    for (i = 0; i < 10; i++) {
+    for (i = 0; i < 34; i++) {
       data.push({
         key: 'Group ' + i,
         values: []
@@ -189,18 +214,13 @@ function setToGraph(testList) {
         x: parseInt(parseDate(test, i)),
         y: parseInt(parseParam(test, i)),
         //we can use this to change the size of a block
-        size: 5,
+        size: .000000000000000000000000001,
         shape: shapes[0]
       });
     }
     return data;
   }
-
-
 }
-
-
-
 </script>
 </body>
 </html>
