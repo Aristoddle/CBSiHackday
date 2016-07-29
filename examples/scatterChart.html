@@ -98,6 +98,50 @@
   }
   }
 
+  function parseDate(obj, index){
+    if (timeState == 'month') {
+      return parseMonth(obj, index);
+    } else return parseYear(obj)
+  }
+  //pulls month published
+  function parseMonth(obj, index) {
+    var formated = obj.data[index].created_time;
+    return parseInt((formated.substring(5,7)));
+  }
+
+  //pulls year published
+  function parseYear(obj) {
+    var formated = obj.data[0].created_time;
+    console.log(parseInt((formated.substring(0,4))));
+    return parseInt((formated.substring(0,4)));
+  }
+
+  function parseParam(obj, index) {
+    var month = parseMonth(obj, i);
+    var date = parseDay(obj, i);
+    holder.monthList[month].total++;
+    holder.monthList[month].dayVals[date]++;
+    return Math.random()*10;
+    return holder.monthList[month].total;
+}
+function parseDay(obj,index) {
+  var formated = obj.data[index].created_time;
+  return formated.substring(8,10);
+}
+
+filter(test);
+
+  function filter(obj){
+    var i = 0;
+    while(i < obj.data.length){
+      var month = parseMonth(obj, i);
+      var date = parseDay(obj, i);
+      holder.monthList[month].total++;
+      holder.monthList[month].dayVals[date]++;
+      i++;
+    }
+  }
+
   // register our custom symbols to nvd3
   // make sure your path is valid given any size because size scales if the chart scales.
 
@@ -154,37 +198,6 @@
       }
       return data;
     }
-
-    function parseDate(obj, index){
-      if (timeState == 'month') {
-        return parseMonth(obj, index);
-      } else return parseYear(obj)
-    }
-    //pulls month published
-    function parseMonth(obj, index) {
-      var formated = obj.data[i].created_time;
-      return parseInt((formated.substring(5,7)));
-    }
-
-    //pulls year published
-    function parseYear(obj) {
-      var formated = obj.data[0].created_time;
-      console.log(parseInt((formated.substring(0,4))));
-      return parseInt((formated.substring(0,4)));
-    }
-
-    function parseParam(obj, index) {
-      var month = parseMonth(obj, i);
-      var date = parseDay(obj, i);
-      holder.monthList[month].total++;
-      holder.monthList[month].dayVals[date]++;
-      return Math.random()*10;
-  }
-  function parseDay(obj,index) {
-    var formated = obj.data[index].created_time;
-    return formated.substring(8,10);
-  }
-
 
 
 }
