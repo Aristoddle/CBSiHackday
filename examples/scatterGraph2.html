@@ -39,64 +39,9 @@
   {"created_time":"2015-09-30","story":"Maslog","message":"ELVITEGRAVIR"},
   {"created_time":"2016-05-31","story":"Le Mans","message":"Trandolapril"},
   {"created_time":"2016-05-03","story":"Baishi","message":"SELENIUM SULFIDE"}]};
-  var testList = [test, test, test];
   var timeState = 'month';
   var contentState = 'story';
-
-  var holder = {
-    year:'2016',
-    monthList:
-    {'01':{
-      'total':0,
-      dayVals: Array.apply(null, Array(31)).map(Number.prototype.valueOf,0)
-    },
-    '02':{
-      'total':0,
-      dayVals: Array.apply(null, Array(28)).map(Number.prototype.valueOf,0)
-    },
-    '03':{
-      'total':0,
-      dayVals: Array.apply(null, Array(31)).map(Number.prototype.valueOf,0)
-    },
-    '04':{
-      'total':0,
-      dayVals: Array.apply(null, Array(30)).map(Number.prototype.valueOf,0)
-    },
-    '05':{
-      'total':0,
-      dayVals: Array.apply(null, Array(31)).map(Number.prototype.valueOf,0)
-    },
-    '06':{
-      'total':0,
-      dayVals: Array.apply(null, Array(30)).map(Number.prototype.valueOf,0)
-    },
-    '07':{
-      'total':0,
-      dayVals: Array.apply(null, Array(31)).map(Number.prototype.valueOf,0)
-    },
-    '08':{
-      'total':0,
-      dayVals: Array.apply(null, Array(31)).map(Number.prototype.valueOf,0)
-    },
-    '09':{
-      'total':0,
-      dayVals: Array.apply(null, Array(30)).map(Number.prototype.valueOf,0)
-    },
-    '10':{
-      'total':0,
-      dayVals: Array.apply(null, Array(31)).map(Number.prototype.valueOf,0)
-    },
-    '11':{
-      'total':0,
-      dayVals: Array.apply(null, Array(30)).map(Number.prototype.valueOf,0)
-
-    },
-    '12':{
-      'total':0,
-      dayVals: Array.apply(null, Array(31)).map(Number.prototype.valueOf,0)
-    }
-  }
-  }
+  console.log(test.data.length);
 
   // register our custom symbols to nvd3
   // make sure your path is valid given any size because size scales if the chart scales.
@@ -120,9 +65,8 @@
     chart.yAxis.tickFormat(d3.format('.02f'));
     chart.yAxis.axisLabel('Metric');
 
-
     d3.select('#test1 svg')
-    .datum(setToGraph(testList))
+    .datum(setToGraph(test))
     .call(chart);
 
     nv.utils.windowResize(chart.update);
@@ -131,21 +75,21 @@
     return chart;
   });
 
-  function setToGraph(testList) {
+  function setToGraph(obj) {
     for (var i = 0; i < test.data.length; i++){
       //# groups,# points per group
       // smiley and thin-x are our custom symbols!
       var data = [],
-      shapes = ['circle', 'cross'],
-      monthName = ['Jan', 'Feb', 'Mar'];
+      shapes = ['circle', 'cross'];
       for (i = 0; i < 4; i++) {
         data.push({
           key: 'Group ' + i,
           values: []
         });
-
+        console.log(parseDate(test));
+        console.log(parseParam(test[i],contentState));
         data[i].values.push({
-          x: parseDate(test, i),
+          x: parseDate(test,i),
           y: parseParam(test, i),
           //we can use this to change the size of a block
           size: Math.round(Math.random() * 100) / 100,
@@ -154,43 +98,108 @@
       }
       return data;
     }
-
-    function parseDate(obj, index){
-      if (timeState == 'month') {
-        return parseMonth(obj, index);
-      } else return parseYear(obj)
-    }
-    //pulls month published
-    function parseMonth(obj, index) {
-      var formated = obj.data[i].created_time;
-      return parseInt((formated.substring(5,7)));
-    }
-
-    //pulls year published
-    function parseYear(obj) {
-      var formated = obj.data[0].created_time;
-      console.log(parseInt((formated.substring(0,4))));
-      return parseInt((formated.substring(0,4)));
-    }
-
-    function parseParam(obj, index) {
-      var month = parseMonth(obj, i);
-      var date = parseDay(obj, i);
-      holder.monthList[month].total++;
-      holder.monthList[month].dayVals[date]++;
-      return Math.random()*10;
   }
+
   function parseDay(obj,index) {
     var formated = obj.data[index].created_time;
     return formated.substring(8,10);
   }
 
+  function parseDate(obj,index){
+    if (timeState == 'month') {
+      return parseMonth(obj,index);
+    } else return parseYear(obj)
+  }
+  //pulls month published
+  function parseMonth(obj,index) {
+    var formated = obj.data[index].created_time;
+    return ((formated.substring(5,7)));
+  }
 
+  //pulls year published
+  function parseYear(obj,index) {
+    var formated = obj.data[index].created_time;
+    return ((formated.substring(0,4)));
+  }
 
+  function parseParam(obj, param) {
+    return Math.random()*100;
+    /*
+    switch(param){
+    case 'story':
+    return (obj.data[0].story)
+    break;
+    case 'created_time':
+    return (obj.data[0].message)
+    break;
+  }
+  */
+}
+var holder = {
+  year:'2016',
+  monthList:
+  {'01':{
+    'total':0,
+    dayVals: Array.apply(null, Array(31)).map(Number.prototype.valueOf,0)
+  },
+  '02':{
+    'total':0,
+    dayVals: Array.apply(null, Array(28)).map(Number.prototype.valueOf,0)
+  },
+  '03':{
+    'total':0,
+    dayVals: Array.apply(null, Array(31)).map(Number.prototype.valueOf,0)
+  },
+  '04':{
+    'total':0,
+    dayVals: Array.apply(null, Array(30)).map(Number.prototype.valueOf,0)
+  },
+  '05':{
+    'total':0,
+    dayVals: Array.apply(null, Array(31)).map(Number.prototype.valueOf,0)
+  },
+  '06':{
+    'total':0,
+    dayVals: Array.apply(null, Array(30)).map(Number.prototype.valueOf,0)
+  },
+  '07':{
+    'total':0,
+    dayVals: Array.apply(null, Array(31)).map(Number.prototype.valueOf,0)
+  },
+  '08':{
+    'total':0,
+    dayVals: Array.apply(null, Array(31)).map(Number.prototype.valueOf,0)
+  },
+  '09':{
+    'total':0,
+    dayVals: Array.apply(null, Array(30)).map(Number.prototype.valueOf,0)
+  },
+  '10':{
+    'total':0,
+    dayVals: Array.apply(null, Array(31)).map(Number.prototype.valueOf,0)
+  },
+  '11':{
+    'total':0,
+    dayVals: Array.apply(null, Array(30)).map(Number.prototype.valueOf,0)
+
+  },
+  '12':{
+    'total':0,
+    dayVals: Array.apply(null, Array(31)).map(Number.prototype.valueOf,0)
+  }
+}
 }
 
-
-
-  </script>
+function filter(obj){
+  var i = 0;
+  while(i < obj.data.length){
+    var month = parseMonth(obj, i);
+    var date = parseDay(obj, i);
+    holder.monthList[month].total++;
+    holder.monthList[month].dayVals[date]++;
+    i++;
+  }
+}
+</script>
 </body>
 </html>
