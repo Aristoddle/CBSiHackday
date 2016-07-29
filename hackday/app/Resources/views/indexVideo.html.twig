@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div>
+        <table>
+            <thead>
+            <tr>
+                <td>Title</td>
+                <td>Likes</td>
+                <td>Views</td>
+            </tr>
+            </thead>
+            <tbody>
+            {% for video in kpis %}
+                <tr>
+                <tr>
+                    <td>
+                        <a href="{{ path('videoPage', {postId: video.id}) }}">{{ video.title }}</a>
+                    </td>
+                    <td>{{ video.likes }}</td>
+                    <td>{{ video.views }}</td>
+                </tr>
+                </tr>
+            {% else %}
+                <h3>YOU AIN'T GOT NO POSTS</h3>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

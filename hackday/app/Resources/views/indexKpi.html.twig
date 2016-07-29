@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div>
+        <table>
+            <thead>
+            <tr>
+                <td>Day</td>
+                <td>Reach</td>
+                <td>Impressions</td>
+            </tr>
+            </thead>
+            <tbody>
+            {% for kpi in kpis %}
+                <tr>
+                    <td>
+                        <a href="{{ path('kpiPage', {id: kpi.id}) }}">{{ kpi.title }}</a>
+                    </td>
+                    <td>{{ kpi.totalReach }}</td>
+                    <td>{{ kpi.totalImpressions }}</td>
+                </tr>
+            {% else %}
+                <h3>YOU AIN'T GOT NO POSTS</h3>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

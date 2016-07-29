@@ -13,38 +13,54 @@ use AppBundle\Entity\DailyKPI;
 use AppBundle\Entity\Post;
 use AppBundle\Entity\Video;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\HttpFoundation\Request;
+use AppBundle\Form\PostType;
 
 class NumberCrunchController extends Controller
 {
-
+    /**
+     *  @Route("/makeposts", name="makePosts")
+     */
     public function populatePosts()
     {
         $em = $this->getDoctrine()->getManager();
 
+
+        for($i = 0; $i < 40; $i++) {
         $post = new Post();
 
-        $post->setPostId();
-        $post->setTitle();
-        $post->setViews();
-        $post->setLikes();
-        $post->setReach();
-        $post->setShares();
-        $post->setImpressions();
-        $post->setComments();
-        $post->setClicks();
+        $post->setPostId(rand(0, 9800000000) + 'sdasduy' + rand(0, 7827873628476));
+        $post->setTitle('This is a Title' + rand(0, 100000));
+        $post->setViews(rand(0, 40000));
+        $post->setLikes(rand(0, 40000));
+        $post->setReach(rand(0, 40000));
+        $post->setShares(rand(0, 4000));
+        $post->setImpressions(rand(0, 4000));
+        $post->setComments(rand(0, 4000));
+        $post->setClicks(rand(0, 4000));
 
         $year = (int)(date('Y'));
         $day = (int)(date('d'));
-        $post->setDay($day);
-        $post->setYear($year);
 
-        $post->setMothership($this->getMotherShip($post->getPostId(), null, 'AppBundle:PostMothership'));
+        $post->setDay(rand(1, 365));
+        $post->setYear(rand(1999, 2016));
+
+        // $post->setDay($day);
+        // $post->setYear($year);
+
+        //$post->setMothership($this->getMotherShip($post->getPostId(), null, 'AppBundle:PostMothership'));
 
         $em->persist($post);
 
+        }
         $em->flush();
+        
+        return $this->render('homepage.html.twig');
     }
-    
+
+
     public function getMotherShip($postId, $data, $repository)
     {
         $em = $this->getDoctrine()->getManager();
@@ -66,36 +82,51 @@ class NumberCrunchController extends Controller
 
     }
 
+    /**
+     *  @Route("/makevideos", name="makeVideos")
+     */
     public function populateVideos()
     {
         $em = $this->getDoctrine()->getManager();
 
-        $video = new Video();
+        for ($i = 0; $i<30; $i++) {
 
-        $video->setVideoId();
-        $video->setTitle();
-        $video->setViews();
-        $video->setLikes();
-        $video->setReach();
-        $video->setShares();
-        $video->setImpressions();
-        $video->setComments();
-        $video->setPercentCompleted();
-        $video->setTenSecViews();
+            $video = new Video();
+
+            $video->setVideoId(rand(0, 9800000000) + 'sdasduy' + rand(0, 7827873628476));
+            $video->setTitle('This is a Video Title' + rand(0, 100000));
+            $video->setViews(rand(0, 40000));
+            $video->setLikes(rand(0, 40000));
+            $video->setReach(rand(0, 40000));
+            $video->setShares(rand(0, 40000));
+            $video->setImpressions(rand(0, 40000));
+            $video->setComments(rand(0, 400000));
+            $video->setPercentCompleted(rand(0, 400000));
+            $video->setTenSecViews(rand(0, 400000));
 
 
-        $year = (int)(date('Y'));
-        $day = (int)(date('d'));
-        $video->setDay($day);
-        $video->setYear($year);
+            $year = (int)(date('Y'));
+            $day = (int)(date('d'));
 
-        $video->setMothership($this->getMotherShip($video->getPostId(), null, 'AppBundle:VideoMothership'));
+            $video->setDay(rand(1, 365));
+            $video->setYear(rand(2000,2016));
 
-        $em->persist($video);
+            // $video->setDay($day);
+            // $video->setYear($year);
 
+            //$video->setMothership($this->getMotherShip($video->getPostId(), null, 'AppBundle:VideoMothership'));
+
+            $em->persist($video);
+
+        }
         $em->flush();
+
+        return $this->render('homepage.html.twig');
     }
 
+    /**
+     *  @Route("/popkpi", name="kpiPopulate")
+     */
     public function populateKPI()
     {
 
@@ -104,6 +135,9 @@ class NumberCrunchController extends Controller
         $date = getdate();
         $dayOfYear = $date['yday'];
         $year = $date['year'];
+
+        $dayOfYear = rand(2, 364);
+        $year = rand(2000, 2016);
 
         //TODO: build out edge case catch for Jan 1st
 
@@ -202,9 +236,11 @@ class NumberCrunchController extends Controller
 
         $kpi = new DailyKPI();
 
+        $kpi->setForday('The best Day');
+
         $kpi->setNumberVideos($numberVideos);
         $kpi->setNumberPosts($numberPosts);
-        $kpi->getTotalPosts($numberVideos + $numberPosts);
+        $kpi->setTotalPosts($numberVideos + $numberPosts);
 
         $kpi->setVideoReach($totalReachVideo);
         $kpi->setPostReach($totalReachPost);
@@ -215,15 +251,17 @@ class NumberCrunchController extends Controller
         $kpi->setTotalImpressions($totalImpressionsPost + $totalImpressionsVideo);
 
         $kpi->setVideoViews($totalVideoViews);
-        $kpi->setVideoCompletions($totalVideoCompletes);
+        $kpi->setVideoCompletes($totalVideoCompletes);
 
         $em->persist($kpi);
         $em->flush();
 
 
-        return $this->render('kpipage.html.twig', [
+        return $this->render('dailyKpi.html.twig', [
             'kpi' => $kpi,
         ]);
+
+        return $this->render('homepage.html.twig');
     }
 
     

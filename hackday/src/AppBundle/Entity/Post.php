@@ -318,4 +318,50 @@ class Post
     {
         return $this->postId;
     }
+
+    /**
+     * Set day
+     *
+     * @param integer $day
+     * @return Post
+     */
+    public function setDay($day)
+    {
+        $this->day = $day;
+
+        return $this;
+    }
+
+    /**
+     * Get day
+     *
+     * @return integer 
+     */
+    public function getDay()
+    {
+        return $this->day;
+    }
+
+    /**
+     * Set year
+     *
+     * @param integer $year
+     * @return Post
+     */
+    public function setYear($year)
+    {
+        $this->year = $year;
+
+        return $this;
+    }
+
+    /**
+     * Get year
+     *
+     * @return integer 
+     */
+    public function getYear()
+    {
+        return $this->year;
+    }
 }

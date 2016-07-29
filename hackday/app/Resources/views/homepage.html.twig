@@ -2,12 +2,12 @@
 
 {% block body %}
 
-    {% image 'OomphLogo.jpg' %}
-    <img src="{{ asset_url }}" alt="Example" />
-    {% endimage %}
-    <div class="ui three column grid">
-        <div class="column">
 
+    <div class="ui three column centered grid">
+        <div class="column">
+            {% image 'OomphLogo.jpg' %}
+            <img src="{{ asset_url }}" alt="Example" class="ui large image" />
+            {% endimage %}
         </div>
         <div class="three column centered row" style="z-index: 200;">
             <div class="ui column">
@@ -22,7 +22,8 @@
     <script type="text/javascript">
         $(document).ready(function(){
             var button = $('#dash');
-            button.click();
+            button.click(moveToDash
+            );
 
             function moveToDash(e){
                 var button = $(e.currentTarget);

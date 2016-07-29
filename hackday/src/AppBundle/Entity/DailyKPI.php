@@ -25,6 +25,11 @@ class DailyKPI
     private $id;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $forday;
+
+    /**
      * @ORM\Column(type="integer")
      */
     private $totalReach;
@@ -463,5 +468,28 @@ class DailyKPI
     public function getVideoCompletes()
     {
         return $this->videoCompletes;
+    }
+
+    /**
+     * Set forday
+     *
+     * @param string $forday
+     * @return DailyKPI
+     */
+    public function setForday($forday)
+    {
+        $this->forday = $forday;
+
+        return $this;
+    }
+
+    /**
+     * Get forday
+     *
+     * @return string 
+     */
+    public function getForday()
+    {
+        return $this->forday;
     }
 }

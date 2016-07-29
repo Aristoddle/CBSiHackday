@@ -140,4 +140,27 @@ class PostMothership
     {
         return $this->dailyInfo;
     }
+
+    /**
+     * Set postId
+     *
+     * @param string $postId
+     * @return PostMothership
+     */
+    public function setPostId($postId)
+    {
+        $this->postId = $postId;
+
+        return $this;
+    }
+
+    /**
+     * Get postId
+     *
+     * @return string 
+     */
+    public function getPostId()
+    {
+        return $this->postId;
+    }
 }

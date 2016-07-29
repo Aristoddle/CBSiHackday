@@ -90,5 +90,83 @@ class DefaultController extends Controller
             'posts' => $posts,
             ]);
     }
+
+    /**
+     *  @Route("/kpi/{id}", name="kpiPage")
+     */
+    public function dailyKPIAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $kpi = $em->getRepository('AppBundle:DailyKPI')
+            ->createQueryBuilder('k')
+            ->where('k.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult();
+
+        if ($kpi) {
+            $kpi = $kpi[0];
+        }
+
+        return $this->render('dailyKpi.html.twig', [
+            'kpi' => $kpi,
+        ]);
+    }
+
+    /**
+     *  @Route("/index/kpi", name="kpiIndex")
+     */
+    public function kpiIndexAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $kpi = $em->getRepository('AppBundle:DailyKPI')
+            ->createQueryBuilder('k')
+            ->getQuery()
+            ->getResult();
+
+
+        return $this->render('indexKpi.html.twig', [
+            'kpis' => $kpi,
+        ]);
+    }
+
+    /**
+     *  @Route("/index/video", name="videoIndex")
+     */
+    public function videoIndexAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $kpi = $em->getRepository('AppBundle:Video')
+            ->createQueryBuilder('k')
+            ->getQuery()
+            ->getResult();
+
+
+        return $this->render('indexVideo.html.twig', [
+            'kpis' => $kpi,
+        ]);
+    }
+
+    /**
+     *  @Route("/video/{id}", name="videoPage")
+     */
+    public function videoPageAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $post = $em->getRepository('AppBundle:Video')
+            ->createQueryBuilder('p')
+            ->where('p.id = :postId')
+            ->setParameter('postId', $id)
+            ->getQuery()
+            ->getResult();
+
+        if ($post) {
+            $post = $post[0];
+        }
+
+        return $this->render('videoPage.html.twig', [
+            'video' => $post,
+        ]);
+    }
 }
 
